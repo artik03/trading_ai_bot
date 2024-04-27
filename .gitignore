@@ -1,0 +1,4 @@
+venv 
+.env
+output.csv 
+__pycache__ 
