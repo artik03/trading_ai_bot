@@ -1,4 +1,7 @@
 venv 
 .env
-output.csv 
 __pycache__ 
+*.csv
+*.xlsx
+test.ipynb 
+main.py

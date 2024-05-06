@@ -8,8 +8,8 @@ n_sma = 20
 n_prediction = 8
 
 # display to file
-def display_data_to_file(data, file_name = 'output.csv') -> None:
-    np.savetxt(file_name, data, delimiter=', ', fmt='%s')
+def display_data_to_file(data, file_name = 'output') -> None:
+    np.savetxt(f'{file_name}.csv', data, delimiter=', ', fmt='%s')
 
 # get range
 def get_candles(data, cur: int, n: int):
@@ -29,6 +29,7 @@ def volume_sma(data, cur: int, n:int):
      data = get_candles(data, cur, -n)
      volumes = get_volumes(data)
      sma_value = np.mean(volumes)
+     return sma_value
 
 def sma(data, cur: int): # cur >= 20
     data = get_candles(data, cur, -n_sma)
@@ -87,8 +88,7 @@ def fill_data(data):
     low_p = get_low_values(data)
     
     m, n = data.shape
-    new_data = np.empty((m-n_sma-n_prediction, 12))
-    print(new_data.shape)
+    new_data = np.empty((m-n_sma-n_prediction, 13))
     
     # start from n_sma+1 since we need 21 candles before for it, -n_prediction-1 for same reason
     for i in range(n_sma,len(data)-n_prediction): # <20; 992) length: 1000-20-8
@@ -99,6 +99,32 @@ def fill_data(data):
         new_data[i-n_sma][4] = cosine_time_values[i]
         new_data[i-n_sma][5] = volumes[i]
         new_data[i-n_sma][6] = volume_sma(data, i, 3)
+        new_data[i-n_sma][7] = volume_sma(data, i, 5)
+        new_data[i-n_sma][8] = volume_sma(data, i, 8)
+        new_data[i-n_sma][9] = open_p[i]
+        new_data[i-n_sma][10] = close_p[i]
+        new_data[i-n_sma][11] = low_p[i]
+        new_data[i-n_sma][12] = high_p[i]
+             
+    return new_data
+
+def get_newest_data(data):
+    sine_time_values, cosine_time_values = dfdate_to_gon(data)
+    volumes = get_volumes(data)
+    open_p = get_open_values(data)
+    close_p = get_close_values(data)
+    high_p = get_high_values(data)
+    low_p = get_low_values(data)
+    
+    new_data = np.empty((15, 12))
+    
+    for i in range(len(data)-14,len(data)): # get data for 15 most recent candles
+        new_data[i-n_sma][0] = sma(data, i)
+        new_data[i-n_sma][1] = ema(data, i)
+        new_data[i-n_sma][2] = sine_time_values[i]
+        new_data[i-n_sma][3] = cosine_time_values[i]
+        new_data[i-n_sma][4] = volumes[i]
+        new_data[i-n_sma][5] = volume_sma(data, i, 3)
         new_data[i-n_sma][6] = volume_sma(data, i, 5)
         new_data[i-n_sma][7] = volume_sma(data, i, 8)
         new_data[i-n_sma][8] = open_p[i]
