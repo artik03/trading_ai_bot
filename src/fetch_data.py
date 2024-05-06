@@ -15,7 +15,6 @@ def get_data(coin: str, interval: str, n_of_intervals: int):
     data = response.json()
 
     df: pd.DataFrame = pd.DataFrame(data, columns=["timestamp", "open", "high", "low", "close", "volume", "close_time", "quote_asset_volume", "number_of_trades", "taker_buy_base_asset_volume", "taker_buy_quote_asset_volume", "ignore"])
-    print(df)
     df.drop(columns=["ignore"], inplace=True)
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
     
