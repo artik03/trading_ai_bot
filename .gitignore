@@ -3,5 +3,4 @@ venv
 __pycache__ 
 *.csv
 *.xlsx
-test.ipynb 
-main.py
+tut.*
