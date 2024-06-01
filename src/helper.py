@@ -99,8 +99,8 @@ def fill_data(data):
         new_data[i-n_sma][4] = cosine_time_values[i]
         new_data[i-n_sma][5] = volumes[i]
         new_data[i-n_sma][6] = volume_sma(data, i, 3)
-        new_data[i-n_sma][7] = volume_sma(data, i, 5)
-        new_data[i-n_sma][8] = volume_sma(data, i, 8)
+        new_data[i-n_sma][7] = volume_sma(data, i, 8)
+        new_data[i-n_sma][8] = volume_sma(data, i, 20)
         new_data[i-n_sma][9] = open_p[i]
         new_data[i-n_sma][10] = close_p[i]
         new_data[i-n_sma][11] = low_p[i]
