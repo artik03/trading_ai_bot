@@ -7,9 +7,14 @@ from getters_alpaca import get_closing_prices, get_open_values,get_high_values, 
 n_sma = 20
 n_prediction = 8
 
-# display to file
+# display to csv file
 def display_data_to_file(data, file_name = 'output') -> None:
     np.savetxt(f'{file_name}.csv', data, delimiter=', ', fmt='%s')
+
+# load from csv file
+def load_data_from_file(file_name='output'):
+    data = np.loadtxt(f'{file_name}.csv', delimiter=',', dtype=str)
+    return data
 
 # get range
 def get_candles(data, cur: int, n: int):
